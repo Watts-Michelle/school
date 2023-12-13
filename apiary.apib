@@ -1,0 +1,2382 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Studytracks
+
+# Access URL
+
+Dev URL: http://studytracks.dev.flipsidegroup.com
+
+The majority of endpoints are at **/api**, however auth endpoints are at **/auth**
+
+# Authorisation Errors 1000+
+Error Codes 1000 - 1999
+
+## 1001
+**Error during login**
+
+* It was not possible to log the user in with the details provided in the request body, *the message given may be different to that below*.
+
++ Response 401 (application/json)
+
+            {
+                "status": "error",
+                "code": 1001,
+                "message": "The user credentials were incorrect."
+            }
+
+## 1002
+**Session invalid**
+
+* This error is usually caused by an expired access token
+
++ Response 401 (application/json)
+
+            {
+                "status": "error",
+                "code": 1002,
+                "message": "Session invalid."
+            }
+
+## 1003
+**Account must be verified**
+
+* The login worked, however, user must enter verification code
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 1003,
+                "message": "Account must be verified."
+            }
+
+## 1004
+**Verification Code expired**
+
+* The user's verification code has expired
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 1004,
+                "message": "Verification Code expired."
+            }
+
+
+## 1005
+**Verification Code incorrect**
+
+* The user's verification code is incorrect
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 1005,
+                "message": "Verification Code incorrect."
+            }
+
+
+## 1006
+**School account suspended**
+
+* The user's school has had their account suspended
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 1005,
+                "message": "School account suspended."
+            }
+
+# Validation Errors 2000+
+Error Codes 2000 - 2999
+
+## 2001
+**A field failed to validate.**
+
+* Usually the response message will tell you which field(s) failed to validate and why.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 2001,
+                "message": "A field failed to validate."
+            }
+
+
+## 2002
+**A user exists with this email address**
+
+* When creating a user, the user must have a unique email address, this user did not.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 2002,
+                "message": "A user exists with this email address"
+            }
+
+## 2003
+**Incorrect Content-Type**
+
+* While updating a user either multipart/form-data or application/json must be given.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 2003,
+                "message": "Incorrect Content-Type"
+            }
+
+
+## 2004
+**A user exists with this username**
+
+* When creating a user, the user must have a unique username, this user did not.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 2004,
+                "message": "A user exists with this username"
+            }
+
+## 2005
+**Only provide an iOS or Android SKU, never both**
+
+* When creating a purchase, do not provide sku's for both android and iOS, only the correct platform.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 2005,
+                "message": "Only provide an iOS or Android SKU, never both"
+            }
+
+
+# Permission Errors 3000+
+Error Codes 3000 - 3999
+
+# Content Missing Errors 4000+
+Error Codes 4000 - 4999 & 404
+
+## 404
+**The endpoint requested was not found or you used the wrong verb (GET, POST, PUT, DELETE)**
+
+* The app requested an endpoint that just ain't there.
+* The message response may tell you which type of request is expected.
+
++ Response 404 (application/json)
+
+            {
+                "status": "error",
+                "code": 404,
+                "message": "The endpoint requested was not found or you used the wrong verb (GET, POST, PUT, DELETE)"
+            }
+
+## 4001
+**Session not given**
+
+* App is trying to place an answer into a session, but has not provided a session parameter
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 4001,
+                "message": "Session not given."
+            }
+
+## 4002
+**Session does not belong to this user**
+
+* The session id does not belong to this user
+
++ Response 404 (application/json)
+
+            {
+                "status": "error",
+                "code": 4002,
+                "message": "Session does not belong to this user"
+            }
+
+
+
+## 4003
+**Either question is missing or it is not an array**
+
+* The API request is missing the required *question* parameter
+
++ Response 403 (application/json)
+
+            {
+                "status": "error",
+                "code": 4003,
+                "message": "Either question is missing or it is not an array"
+            }
+
+## 4004
+**Question not found in the user's session**
+
+* One of the questions that has been sent through either does not exist in the session.
+* The response message contains the question id that failed
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 4004,
+                "message": "Question not found in the user's session"
+            }
+
+## 4005
+**Multiple answers not allowed**
+
+* Multiple answers have been provided by the user, however, the question does not allow this.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 4005,
+                "message": "Multiple answers not allowed"
+            }
+
+## 4006
+**Missing answer to a previous question**
+
+* Each question is numbered in a specific order, one of the previous questions has not been answered by the user.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 4006,
+                "message": "Missing answer to a previous question"
+            }
+
+## 4007
+**No ID given**
+
+* While attempting to get a lesson, no id was given in the request body
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 4007,
+                "message": "No ID given"
+            }
+
+## 4008
+**The ID given does not exist**
+
+* While attempting to get a lesson an ID was provided that was not found.
+
++ Response 400 (application/json)
+
+            {
+                "status": "error",
+                "code": 4008,
+                "message": "The ID given does not exist"
+            }
+
+
+
+
+# System Errors 5000+
+Error Codes 5000 - 5999
+These errors mean the API screwed up and you should probably let us know
+
+## 5000
+**Unable to store data**
+
+* We tried to save data to the database and it failed
+
++ Response 500 (application/json)
+
+            {
+                "status": "error",
+                "code": 5000,
+                "message": "Unable to store data"
+            }
+
+
+## Lesson [/lesson]
+
++ Attributes (object)
+    - id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+    - object_id: '12'
+    - event_id: `90`
+    - subject_id: `cc338012-2802-4082-a66c-306fb095ad96` (string)
+    - subject: Physics (string)
+    - subject_icon: http://studytracks.dev.flipsidegroup.com/assets/Uploads/physics-icon.png (string)
+    - subject_image: http://studytracks.dev.flipsidegroup.com/assets/Uploads/physics-icon.png (string)
+    - name: Doing barrel rolls (string)
+    - favourite: 1 (number)
+    - favourited: 524016000 (number)
+    - image: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+    - duration: 15 (number) - in seconds
+    - can_be_listened: 1 (number) - boolean for if user can listen to this track
+    - type: audio (enum[string])
+        - Members
+            - video
+            - audio
+    - link (array)
+        - (object)
+            - size: 720 (number) - height of a video
+            - link: http://example.com/video.mp4
+            - link_lq: `http://example.com/audio-48kbps.mp3` - Audio only
+    - link_last_updated: 524016000 (number)
+    - subtitles_link: http://example.com/subtitles.srt
+    - content: lalala (string) - text content for this lesson
+    - content_pdf: http://www.studytracks...
+    - sort_order: 1 (number, optional) - usually only returned in a list
+    - completed: 0 (number)
+    - completed_date: 524016000 (number)
+    - last_updated: 524016000 (number)
+    - media (array)
+        - (object)
+            - type: audio (string)
+            - duration: 257 (number)
+            - link (array)
+                - (object)
+                    - size: 720 (number) - height of a video
+                    - link: http://example.com/video.mp4
+                    - link_lq: `http://example.com/audio-48kbps.mp3` - Audio only
+            - link_last_updated: 1505485167 (number)
+            - subtitles_link: http://example.com/subtitles.
+        - (object)
+            - type: video (string)
+            - duration: 257 (number)
+            - link (array)
+                - (object)
+                    - size: 720 (number) - height of a video
+                    - link: http://example.com/video.mp4
+                    - link_lq: `http://example.com/audio-48kbps.mp3` - Audio only
+            - link_last_updated: 1505485167 (number)
+            - subtitles_link: http://example.com/subtitles.
+
+## HomeworkLesson [/lesson]
+
++ Attributes (object)
+    - id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+    - object_id: '15'
+    - subject_id: `cc338012-2802-4082-a66c-306fb095ad96` (string)
+    - name: Doing barrel rolls (string)
+    - favourite: 1 (number)
+    - image: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+    - subject: Physics (string)
+    - subject_icon: http://studytracks.dev.flipsidegroup.com/assets/Uploads/physics-icon.png (string)
+    - subject_image: http://studytracks.dev.flipsidegroup.com/assets/Uploads/physics-icon.png (string)
+    - duration: 15 (number) - in seconds
+    - can_be_listened: 1 (number) - boolean for if user can listen to this track
+    - type: video (enum[string])
+        - Members
+            - video
+            - audio
+    - link (array)
+        - (object)
+            - size: 720 (number) - height of a video
+            - link: http://example.com/video.mp4
+            - link_lq: `http://example.com/audio-48kbps.mp3` - Audio only
+    - link_last_updated: 524016000 (number)
+    - subtitles_file: http://example.com/subtitles.srt
+    - content: lalala (string) - text content for this lesson
+    - favourited: 524016000 (number)
+    - sort_order: 1 (number, optional) - usually only returned in a list
+    - completed: 0 (number)
+    - completed_date: 524016000 (number)
+    - last_updated: 524016000 (number)
+
+## UserSession [/usersession]
+
++ Attributes (object)
+    - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string, optional)
+    - created: 524016000 (number, optional)
+    - complete: 0 (number, optional)
+    - complete_date: 524016000 (number, optional)
+    - time_taken: 360 (number, optional)
+    - comparison: 32 (number) - percentage against other users
+    - points_earned: 0 (number)
+    - correct: 8 (number) - number of questions answered correctly
+    - question (array)
+        - (object)
+            - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - name: What is the air speed velocity of an unladen swallow? (string)
+            - accept_multiple: 0 (number)
+            - question_number: 1 (number)
+            - user_correct: 1 (number, optional) - if the user is correct, mark it here
+            - answer (array)
+                - (object)
+                    - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+                    - name: The width and depth amplify (string)
+                    - sort_order: 1 (number)
+                    - correct: 0 (number) - correct answers will be 1
+            - user_answer (array) - an array of answer ids that the user gave
+
+## Subject [/subject]
+
++ Attributes (object)
+    - id: `cc338012-2802-4082-a66c-306fb095ad96` (string)
+    - object_id: '15'
+    - event_id: `50`
+    - name: Biology Revision (string)
+    - image: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+    - lesson_count: 10 (number)
+    - quiz_count: 8 (number)
+    - last_updated: 524016000 (number)
+    - exam_level: GCSE (string)
+    - subject: Physics (string)
+    - subject_icon: http://studytracks.dev.flipsidegroup.com/assets/Uploads/physics-icon.png (string)
+    - sort_order: 1 (number)
+    - premium: 1 (number)
+    - ios_sku: aofeiofehfeifadf (string)
+    - android_sku: aofeiofehfeifadf (string)
+    - last_updated: 524016000 (number)
+    - lesson (array)
+        - (Lesson)
+    - quiz (array)
+        - (object)
+            - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - object_id: '13'
+            - name: Test 1 (string)
+            - subject_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - user_session_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - question_count: 12 (number)
+            - questions_answered: 2 (number)
+            - current_question: 2 (number)
+            - sort_order: 1 (number)
+
+## User [/user]
+
++ Attributes (object)
+    + id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+    + school_id: 2 (number)
+    + firstname: James (string)
+    + lastname: Bond (string)
+    + email: james@bond.com (string)
+    + username: jblogs (string)
+    + date_of_birth: 524016000 (number)
+    + country: United Kingdom (string)
+    + image: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+    + exam_level: GCSE (string)
+    + exam_country: United Kingdom (string)
+    + ethnicity: White British (string)
+    + lessons_listened: 10 (number)
+    + device: Xperia (string)
+    + free_subscription_expiration: `2017-12-30 00:00:00` (string),
+    + subscription_expiration: 1514588400 (number),
+    + subscription_expiration_date: `2017-12-30 00:00:00` (string),
+    + subscription_status: `Subscribed` (enum[string])
+        + `Subscribed`
+        + `Unsubscribed`
+    + subscription_purchase_platform: `ios` (enum[string])
+        + `ios`
+        + `android`
+        + `bysupport`
+    + results (object)
+        + total_points: 123123 (number)
+        + questions_answered: 204 (number)
+        + percentage_correct: 82 (number)
+        + tests_completed: 10 (number)
+        + lessons_completed: 10 (number)
+        + ranking_position: 3 (number)
+    + events (object)
+        + song_completed: 4 (number)
+        + quiz_success: 3 (number)
+        + share: 12 (number)
+    + agreements (array)
+        + legal (Legal)
+    + agreements_completed (array)
+        + legal (Legal)
+
+
+## Legal [/legal]
++ Attributes (object)
+    - UUID: `21341b1c-5e39-4120-b8f6-da8e3e364626` (string)
+    - Title: `Example Title` (string)
+    - Content: `<p>Example Content</p>` (string)
+    - AcceptanceText: 'I agree...` (string)
+    - ProvideInAPI: 1 (number)
+    - ProvideInRegistration: 1 (number)
+    - MarkAsRequired: 1 (number)
+    - Safename: `example_title` (string)
+    - PublishDate: `2018-05-17 10:00:00` (string)
+    - RevisionsCount: 0 (number)
+
+## Quiz [/quiz]
+
++ Attributes (object)
+    - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+    - object_id: '17'
+    - name: Test 1 (string)
+    - subject_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+    - subject_object_id: 12
+    - subject: Electronics (string)
+    - subject_icon: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+    - question_count: 12 (number)
+    - current_question: 2 (number)
+    - duration: 300 (number) - How long the quiz should last in seconds
+    - current_question_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+    - sort_order: 1 (number)
+    - user_session (UserSession)
+    - other_users (array)
+        - (object)
+            - name: `0-10%` (string)
+            - short_name: 0 (string)
+            - number: 10 (number)
+            - percentage: 15 (number)
+    - homework_playlists (array)
+        - (object)
+            - homework_playlist: `d3e292b7-3981-4b5a-b40b-73d6ba178262` (string)
+            - homework_playlist_session: `1ad283a1-a9f5-434c-97c2-1aad4b0fd8d3` (string)
+        - (object)
+            - homework_playlist: `d0e63775-0688-4b90-b71a-5b89b2832e35` (string)
+            - homework_playlist_session: `0d62ab02-1b8b-4840-b686-10fefb5588a4` (string)
+
+## Class [/class] 
+
++ Attributes (object)
+    - id: `2`
+    - name: Mathmatics Class
+    - staff: Miss Teacher
+
+# Group Authentication
+Authentication of the service is handled using OAUTH 2.0
+
+As the API should solely be communicating with mobile devices that are using a trusted client we are using the Password Grant type.
+
+More information on the server implementation of OAUTH can be found at:
+http://oauth2.thephpleague.com/authorization-server/resource-owner-password-credentials-grant/
+
+# retrieving an access token [/auth/access_token]
+This endpoint will log a user in to the system. It also returns a custom message dependant on device
+
+## Login using password [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
+    + Attributes
+        + username: test@example.com (string, required) - An existing user's email address
+        + password: monkey (string, required) - An existing user's password
+        + grant_type: password (string, required) - The grant type, should always be password
+        + client_id: studytracks_dev (string, required) - The client id for the project
+        + client_secret: AuTNVh73mLyc6DjhuYKtWipJLHrMpVJLsvfDFxxUyCAwwM (string, required) - The client secret for the project
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + access_token: abc (string, required)
+        + token_type: bearer (string, required)
+        + expires_in: 3600 (number, required)
+        + refresh_token: abc (string, required)
+        + status: success (string, required)
+        + exists: 1 (number, required) - did user exist before login (can only be 0 for facebook)
+        + device_message: Congrats, you now have access to all content absolutely free! (string)
+
+## Login using Facebook [POST]
+
++ Request (application/json)
+
+    + Attributes
+        + access_token (string, required) - Facebook access token
+        + grant_type: facebook (string, required) - The grant type, should always be facebook
+        + client_id: studytracks_dev (string, required) - The client id for the project
+        + client_secret: AuTNVh73mLyc6DjhuYKtWipJLHrMpVJLsvfDFxxUyCAwwM (string, required) - The client secret for the project
+
+    + Body
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "access_token": "wbjIz4egpmQXxyUjV8NvKAN4chJwFo7rJJvCyrFd",
+                "token_type": "Bearer",
+                "expires_in": 3600,
+                "refresh_token": "wbjIz4egpmQXxyUjV8NvKAN4chJwFo7rJJvCyrFd",
+                "exists": 1,
+                "device_message": "Congrats, you now have access to all content absolutely free!"
+            }
+
+    + Attributes
+        + access_token: abc (string, required)
+        + token_type: bearer (string, required)
+        + expires_in: 3600 (number, required)
+        + refresh_token: abc (string, required)
+        + status: success (string, required)
+        + exists: 1 (number, required) - did user exist before login (can only be 0 for facebook)
+        + device_message: Congrats, you now have access to all content absolutely free! (string)
+
+## Login using Refresh Token [POST]
+
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
+    + Attributes
+        + refresh_token: wbjIz4egpmQXxyUjV8NvKAN4chJwFo7rJJvCyrFd (string, required) - Refresh token from an existing login
+        + grant_type: refresh_token (string, required) - The grant type
+        + client_id: studytracks_dev (string, required) - The client id for the project
+        + client_secret: AuTNVh73mLyc6DjhuYKtWipJLHrMpVJLsvfDFxxUyCAwwM (string, required) - The client secret for the project
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + access_token: abc (string, required)
+        + token_type: bearer (string, required)
+        + expires_in: 3600 (number, required)
+        + refresh_token: abc (string, required)
+        + status: success (string, required)
+        + exists: 1 (number, required) - did user exist before login (can only be 0 for facebook)
+        + device_message: Congrats, you now have access to all content absolutely free! (string)
+
+# Verify the user's account [/api/user/me/verify]
+
+## Request new code [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+## Check code [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
+    + Attributes
+        + code: 231323 (number, required)
+
++ Response 200 (application/json; charset=utf-8)
+
++ Attributes
+    + status: success (string, required)
+
+
+# Logout user [/api/user/logout]
+
+## Logout the current user [DELETE]
+
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+
+
+
+# Group User Endpoints
+
+# Create user [/api/user/create]
+When creating a new user either a password or a facebook_user_id must be provided
+
+## Create a new user [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
+    + Attributes
+        + email: tests@example.com (string, required)
+        + username: jblogs (string, required)
+        + password: monkey (string, required)
+        + firstname: George (string, optional)
+        + lastname: Best (string, optional)
+        + gender: Male (string, optional)
+        + date_of_birth: 524016000 (number, optional)
+        + country: United Kingdom (string, optional)
+        + ethnicity: White British (string, optional)
+        + exam_level: GCSE (string, required)
+        + exam_country: United Kingdom (string, required)
+        + device: Xperia (string, optional) - A users device type
+        + underage: true (boolean, optional)
+        + parent_email: parent@example.com (string, optional)
+        + agreements (array)
+            + (object)
+                + legal_UUID: 21341b1c-5e39-4120-b8f6-da8e3e364626 (string) 
+                + safename: legal_name (string)
+                + value: true (boolean)
+            + (object)
+                + legal_UUID: 51341b1c-5e39-4120-b8f6-da8e3e364626 (string) 
+                + safename: other_legal_name (string)
+                + value: false (boolean)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string)
+        + user (User)
+        + message: Congrats, you now have access to all content absolutely free! (string)
+
+# Account checks [/api/user/check/{type}?{username}]
+
++ Parameters
+    + type: username or email (string) - currently only username and email supported
+    + username: gregg122 (string) - the username to check
+    + email: test@flipsidegroup.com - the email to check
+
+## Check if a username exists [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
++ Response 200
+    + sent when the username already exists
+
++ Response 400
+    + no username sent
+
++ Response 404
+    + the username does not exist
+   
+    
+## Check if an email exists [GET /api/user/check/{type}?{email}]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
++ Response 200
+    + sent when the email already exists
+
++ Response 400
+    + no email sent
+
++ Response 404
+    + the email does not exist
+    
+
+# Forgotten Password [/api/user/forgotten]
+
+## Send the user a forgotten password email [POST]
+
+You have an option here, alternatively you can create a web view [URL]/Security/lostpassword. This can also be used to reset the user's password.
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+
+    + Attributes
+        + email: test@example.com (string) - The user's email
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+# Current user [/api/user/me]
+
+## Get the user [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string)
+        + user (User)
+
+## Post the user [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + email: tests@example.com (string, optional)
+        + username: jblogs (string, optional)
+        + password: monkey (string, optional) - only include if user is updating
+        + firstname: George (string, required)
+        + lastname: Best (string, optional)
+        + gender: Male (string, optional)
+        + ethnicity: White English (string, optional)
+        + date_of_birth: 524016000 (number, optional)
+        + country: United Kingdom (string, required)
+        + ethnicity: White British (string, optional)
+        + exam_level: GCSE (string, optional)
+        + exam_country: United Kingdom (string, optional)
+        + device: Xperia (string, optional)
+
++ Request (multipart/form-data)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+            Content-Disposition: form-data; name="image"; filename="filename.jpg"
+
+    + Body
+
+            data
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string)
+        + user (User)
+
+## Delete the user [DELETE]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+
++ Response 404 (application/json; charset=utf-8)
+If the user is not authenticated then a 404 will be provided
+
+    + Body
+
+            {
+                "status": "not_found",
+                "code": 404,
+                "message": "The resource you are trying to access has either been deleted or does not exist."
+            }
+            
+# Current User Events [/api/user/me/event]
+
+## Register new Song Completed Event [POST /api/user/me/event/song]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string)
+        + user (User)
+        
+## Register new Quiz > 80% Event [POST /api/user/me/event/quiz]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string)
+        + user (User)
+        
+## Register new Share Event [POST /api/user/me/event/share]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string)
+        + user (User)
+        
+        
+# User Subscription [/api/user/me/subscription]
+        
+## Update User Subscription [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + android_sku: subscription.1month (string, optional)
+        + ios_sku: subscription.1month (string, optional)
+
++ Response 200 (application/json; charset=utf-8)
+
+        + status: success (string, required)  
+
+# Urban Airship [/api/user/me/associate]
+Register user with Urban Airship
+
+## Associate Token [POST]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + channel_id: 11e0e570-b5b0-4408-992f-7592707bb3c5 (string, required)
+        + platform: ios (enum[string], optional)
+            + ios
+            + android
+
++ Response 200 (application/json; charset=utf-8)
+
+            {
+                "status": "success"
+            }
+
+
+# Complete Legal [/api/user/me/legal/{legal_UUID}/complete]
+## Complete Legal [PUT]
++ Parameters
+    + legal_UUID: `6bf48365-13de-422b-8c32-346423a94466` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required) 
+
+
+# Complete All Legals [/api/user/me/legal/completelegals/{$countryCode}]
+## Complete All Legals [POST]
++ Parameters
+    + countryCode: `EN` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + agreements (array)
+            + (object)
+                + uuid: `6bf48365-13de-422b-8c32-346423a94466` (string)
+                + title: `Example title` (string)
+                + safename: `example_title` (string)
+                + value: true (boolean)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + completed_legals (array)
+            + legal (Legal)
+        + already_completed_legals (array)
+            + legal (Legal)
+        + status: success (string, required) 
+
+
+
+# Group Purchase
+
+# Purchase [/api/user/me/purchase]
+
+## Purchase statuses [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + subject (array)
+            + (object)
+                + id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string, optional)
+                + name: biology (string)
+                + ios_sku: adasdadsd (string)
+                + android_sku: adjsidasd (string)
+                + premium: 1 (number)
+
+        + subject_group (array)
+            + (object)
+                + name: biology, maths, english (string)
+                + ios_sku: adasdadsd (string)
+                + android_sku: adjsidasd (string)
+                + premium: 1 (number)
+        + status: success (string, required)
+
+
+## Announce purchase [POST]
+
+After announcing a purchase, please request subject again, as new lessons may now be unlocked.
+
+Only send the sku field for your platform
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + purchase (array)
+            + (object)
+                + android_sku: asnipdni03d219 (string, optional)
+                + ios_sku: asnipdni03d219 (string, optional)
+                + order: fn0q3rdnqd (string) - an order number
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+# Group Subscription
+
+# Subscription [/api/subscription]
+
+## Get All Subscription Types [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + subscription_types (array)
+            + (object)
+                + duration: 1 (number)
+                + type: Month (string)
+                + discount: 50 (number)
+                + ios_sku: subscription.1month (string)
+                + android_sku: subscription.1month (string)
+        + status: success (string, required)
+
+
+## Validate IOS Subscription Receipt [POST /api/subscription/validateIOS]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + receipt: (string, required)
+        + debug_response: false (boolean, optional)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + expires_date: `2017-06-29 13:39:22` (string)
+        + status: success (string, required)
+
+## Validate Android Subscription Receipt [POST /api/subscription/validateAndroid]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + orderId: 12999763169054705758.1371079406387615 (string)
+        + packageName: com.example.app (string)
+        + productId: exampleSku (string)
+        + purchaseTime: 1345678900000,
+        + purchaseState: 0
+        + developerPayload: bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ (string)
+        + purchaseToken: rojeslcdyyiapnqcynkjyyjh (string)
+        + autoRenewing: true (boolean)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+# Group Homework Playlists
+
+# Homework Playlists [/api/homeworkplaylists]
+
+## Get Current Users Homework Playlists [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - homework_playlists (array)
+            + id: `8ac35b25-d222-4276-97d0-abf2a62ee751` (string)
+            + name: Homework One (string)
+            + viewed: 1
+            + completed: 1
+            + deadline: 1483315200
+            - classes (array)
+                - (Class)
+            - lessons (array)
+                - (HomeworkLesson)
+            - quizzes (array)
+                - (Quiz)
+        - status: success (string)
+
+## Get Specific Homework Playlist [GET /api/homeworkplaylists/{playlist_UUID}]
+
++ Parameters
+    + playlist_UUID: `6cd38cf1-9fc7-4267-bbc0-767ac7473af1` (string, required)
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - homework_playlist (object)
+            + id: `8ac35b25-d222-4276-97d0-abf2a62ee751` (string)
+            + name: Homework One (string)
+            + viewed: 1
+            + completed: 1
+            + deadline: 1483315200
+            - classes (array)
+                - (Class)
+            - lessons (array)
+                - (HomeworkLesson)
+            - quizzes (array)
+                - (Quiz)
+        - status: success (string)
+        
+# Update Homework Playlists Complete Status [/api/homeworkplaylists/{playlist_UUID}]        
+
+## Update Homework Playlist Lesson Complete Status [PUT /api/homeworkplaylists/{playlist_UUID}/lesson/{lesson_UUID}/complete]
++ Parameters
+    + playlist_UUID: `4b76158d-4384-4314-857d-054bb52a0879` (string)
+    + lesson_UUID: `00823b66-3b75-4d39-b70f-8f131e69f75d` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + points_earned: 2000 (number)
+        + status: success (string, required)
+        
+## Update Homework Playlist Quiz Complete Status [PUT /api/homeworkplaylists/{playlist_UUID}/quiz/{quiz_UUID}/complete]
++ Parameters
+    + playlist_UUID: `4b76158d-4384-4314-857d-054bb52a0879` (string)
+    + quiz_UUID: `00823b66-3b75-4d39-b70f-8f131e69f75d` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)        
+
+# Update Homework Playlists Viewed Status [/api/homeworkplaylists/{}]        
+
+## Update Homework Playlist Viewed Status [PUT /api/homeworkplaylists/{playlist_UUID}/viewed]
++ Parameters
+    + playlist_UUID: `4b76158d-4384-4314-857d-054bb52a0879` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+## Update Homework Playlist Lesson Viewed Status [PUT /api/homeworkplaylists/{playlist_UUID}/lesson/{lesson_UUID}/viewed]
++ Parameters
+    + playlist_UUID: `4b76158d-4384-4314-857d-054bb52a0879` (string)
+    + lesson_UUID: `00823b66-3b75-4d39-b70f-8f131e69f75d` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+        
+## Update Homework Playlist Quiz Viewed Status [PUT /api/homeworkplaylists/{playlist_UUID}/quiz/{quiz_UUID}/viewed]
++ Parameters
+    + playlist_UUID: `4b76158d-4384-4314-857d-054bb52a0879` (string)
+    + quiz_UUID: `00823b66-3b75-4d39-b70f-8f131e69f75d` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)        
+
+# Group Subjects
+
+# Subject [/api/subject]
+
+## Get Subjects [GET /api/subject?lessons=true&quiz=true]
+
++ Parameters
+    + lessons: (string, optional) - Set to 'false' removes lessons data
+    + quiz: (string, optional) - Set  to 'false' removes quiz data
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - subject (array)
+            - (Subject)
+        - deleted_subject (array)
+        - deleted_lesson (array)
+        - subject_group (array)
+            - (object)
+                - ios_sku: aofeiofehfeifadf (string)
+                - android_sku: aofeiofehfeifadf (string)
+                - subjects (array) - array of subject ids
+        - status: success (string)
+
+## Get Specific Subject [GET /api/subject/UUID]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+        
+    + Attributes (object)
+        + subject
+            - id: 'cc338012-2802-4082-a66c-306fb095ad96' (string)
+            - object_id: '15'
+            - event_id: '50'
+            - name: Biology Revision (string)
+            - level: 'England GCSE / YR 9 - 11' (string)
+            - subject: Physics (string)
+            - subject_icon: http://studytracks.dev.flipsidegroup.com/assets/Uploads/physics-icon.png (string)
+            - subject_image: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+            - image: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+            - sort_order: 1 (number)
+            - premium: 1 (number)
+            - ios_sku: aofeiofehfeifadf (string)
+            - android_sku: aofeiofehfeifadf (string)
+            - last_updated: 524016000 (number)
+            - lesson_count: 10 (number)
+            - quiz_count: 8 (number)
+        + status: success (string)
+        
+## Get Specific Subject Quizzes [GET /api/subject/UUID/quizzes]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + quizzes (array)
+            - (object)
+                - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+                - object_id: '13'
+                - name: Test 1 (string)
+                - subject_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+                - subject_object_id: 12
+                - subject: Electronics (string)
+                - subject_icon: http://studytracks.dev.flipsidegroup.com/themes/studytracks/images/logo2.png (string)
+                - user_session_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+                - duration: 300 (number) - How long the quiz should last in seconds
+                - question_count: 12 (number)
+                - questions_answered: 2 (number)
+                - current_question: 2 (number)
+                - sort_order: 1 (number)
+                - other_users (array)
+                    - (object)
+                        - name: `0-10%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)
+                    - (object)
+                        - name: `10-20%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)   
+                    - (object)
+                        - name: `20-30%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number) 
+                    - (object)
+                        - name: `30-40%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)   
+                    - (object)
+                        - name: `40-50%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)   
+                    - (object)
+                        - name: `50-60%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)   
+                    - (object)
+                        - name: `60-70%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)   
+                    - (object)
+                        - name: `70-80%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)   
+                    - (object)
+                        - name: `80-90%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)       
+                    - (object)
+                        - name: `90-100%` (string)
+                        - short_name: 0 (string)
+                        - number: 10 (number)
+                        - percentage: 15 (number)                               
+        + status: success (string)       
+
+## Get Specific Subject Lessons [GET /api/subject/UUID/lessons]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + lessons (array)
+            - (Lesson)
+        + status: success (string)   
+
+# Group Lessons
+
+# Lesson [/api/lesson/{id}]
+
++ Parameters
+    + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+
+## Update lesson status [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + favourite: 1 (number, optional)
+        + completed: 1 (number, optional)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + points_earned: 10 (number)
+        + status: success (string, required)
+
+
+
+# Group Quiz
+
+## Quizzes [/api/quiz/{id}{?session_id}]
+
+If no session_id is provided the answer will be put into the first session created for this user for this question (when the first answer is PUT), unless the test is already completed, in which case a new session will be created.
+
+### Get Quiz [GET]
+
++ Parameters
+    + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+    + session_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - quiz (Quiz)
+        + status: success (string, required)
+
+## Create answer session [POST]
++ Parameters
+    + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+    + user_session_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string, optional)
+    + playlist_id: `cbb9ba2b-ece9-4572-9464-3d16f2eedd64` (string, optional) - required to link this homework quiz to a homework playlist quiz session.
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - quiz (object)
+            - id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - name: Test 1 (string)
+            - subject_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - question_count: 12 (number)
+            - current_question: 2 (number)
+            - current_question_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+            - sort_order: 1 (number)
+            - user_session (UserSession)
+            - points_earned: 0 (number)
+            - other_users (array)
+                - (object)
+                    - name: 0-10% (string)
+                    - short_name: 0 (string)
+                    - number: 10 (number)
+                    - percentage: 15 (number)
+        + status: success (string, required)
+
+## Answer a question [PUT]
++ Parameters
+    + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+    + user_session_id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + question (array)
+            + (object)
+                + id: `1275dc64-b441-46f6-a573-957f4fe1d676` (string)
+                + user_session_time_taken: 360 (number, optional)
+                + answer (array) - an array of ids
+        + completed (number) - do we need to force this quiz session to be completed?
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - quiz (Quiz)
+        + status: success (string, required)
+
+# Results [/api/quiz/results]
+
+## Get quiz results [GET]
+
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - quiz_sessions (array)
+            - (Quiz)
+        + status: success (string, required)
+
+
+
+
+# Group Favourites
+
+# Favourites [/api/favourites]
+
+## Get Favourites [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - lesson (array)
+            - (Lesson)
+        - status: success (string)
+
+## Add Favourite [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+    + Attributes
+        + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+
+# Single Favourite [/api/favourite/{id}]
+
+## Remove Favourite [DELETE]
+
++ Parameters
+    + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+
+
+
+# Group Playlists
+
+# Playlists [/api/playlist]
+
+## Get Playlists [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - playlist (array)
+            - (object)
+                - id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+                - name: Greg (string)
+                - lesson_count: 10 (string)
+                - lesson (array)
+                    - (Lesson)
+        - status: success (string)
+
+## Add playlist [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Attributes
+    + name: Cabbage (string) - The playlist name
+    + lesson (array, optional) - An array of lesson ids
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - playlist (array)
+            - (object)
+                - id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+                - name: Greg (string)
+                - lesson_count: 10 (string)
+                - lesson (array)
+                    - (Lesson)
+        - status: success (string)
+
+# Single Playlists [/api/playlist/{id}]
+
++ Parameters
+    + id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+
+## Get Playlist [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - playlist (array)
+            - (object)
+                - id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+                - name: Greg (string)
+                - lesson_count: 10 (string)
+                - lesson (array)
+                    - (Lesson)
+        - status: success (string)
+
+## Update playlist [POST]
+
+Lessons provided here will replace any currently on this playlist. This is intended to accept a whole list. If no lessons are sent at all then they will not be replaced/deleted.
+Generally this endpoint will be used to update the playlist's name. Add and remove endpoints *should* be used for lesson management.
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+
++ Attributes
+    + name: Cabbage (string) - The playlist name
+    + lesson (array, optional) - An array of playlist ids
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        - playlist (array)
+            - (object)
+                - id: `7762d701-809b-4634-b020-8caebbf36082` (string)
+                - name: Greg (string)
+                - lesson_count: 10 (string)
+                - lesson (array)
+                    - (Lesson)
+        - status: success (string)
+
+## Add track [PUT]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+
+    + Attributes
+        + lesson (array) - An array of playlist ids
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+## Delete playlist [DELETE]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+# Single Playlists [/api/playlist/{id}/{lesson_id}]
+
+## Delete track from playlist [DELETE]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + status: success (string, required)
+
+
+# Group Legals
+
+# Available Legals [/api/legals]
+## Get all available legals [GET]
+DOES NOT REQUIRE AUTHENTICATION
+
+ + Request
+
+     + Headers
+
+             Accept: application/vnd.studytracks.v1+json
+             Authorization: Bearer {access_token}
+
+ + Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + legals (array)
+            + (object)
+                + UUID (string)
+                + Title (string)
+                + Content (string)
+                + AcceptanceText (string)
+                + ProvideInAPI (boolean)
+                + ProvideInRegistration (boolean)
+                + MarkAsRequired (boolean)
+                + Safename (string)
+                + PublishDate (string)
+                + RevisionsCount (number)
+
+    + Body
+
+            {
+                "legals": [
+                    {
+                        "UUID": "6bf48365-13de-422b-8c32-346423a94466",
+                        "Title": "Legal Title",
+                        "Content": "<p>Legal content</p>",
+                        "AcceptanceText": "Acceptance text",
+                        "ProvideInAPI": 1,
+                        "ProvideInRegistration": 1,
+                        "MarkAsRequired": 1,
+                        "Safename": "legal_title",
+                        "PublishDate": "2018-05-17 10:00:00",
+                        "RevisionsCount": 0
+                    },
+                    {
+                        "UUID": "6bf48365-13de-422b-8c32-346423a94467",
+                        "Title": "Other Title",
+                        "Content": "<p>Other content</p>",
+                        "AcceptanceText": "Other Acceptance text",
+                        "ProvideInAPI": 1,
+                        "ProvideInRegistration": 1,
+                        "MarkAsRequired": 0,
+                        "Safename": "other_legal_title",
+                        "PublishDate": "2018-05-18 10:00:00",
+                        "RevisionsCount": 0
+                    }
+                ]
+            }
+
+
+
+# Registration Legals [/api/legals/registrationlegals/{countryCode}]
+## Get all registration legals [GET]
+DOES NOT REQUIRE AUTHENTICATION
+
++ Parameters
+    + countryCode: `EN` (string,required)
+
+ + Request
+
+     + Headers
+
+             Accept: application/vnd.studytracks.v1+json
+             Authorization: Bearer {access_token}
+
+ + Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + legals (array)
+            + (object)
+                + UUID (string)
+                + Title (string)
+                + Content (string)
+                + AcceptanceText (string)
+                + ProvideInAPI (boolean)
+                + ProvideInRegistration (boolean)
+                + MarkAsRequired (boolean)
+                + Safename (string)
+                + PublishDate (string)
+                + RevisionsCount (number)
+
+    + Body
+
+            {
+                "legals": [
+                    {
+                        "UUID": "6bf48365-13de-422b-8c32-346423a94466",
+                        "Title": "Legal Title",
+                        "Content": "<p>Legal content</p>",
+                        "AcceptanceText": "Acceptance text",
+                        "ProvideInAPI": 1,
+                        "ProvideInRegistration": 1,
+                        "MarkAsRequired": 1,
+                        "Safename": "legal_title",
+                        "PublishDate": "2018-05-17 10:00:00",
+                        "RevisionsCount": 0
+                    },
+                    {
+                        "UUID": "6bf48365-13de-422b-8c32-346423a94467",
+                        "Title": "Other Title",
+                        "Content": "<p>Other content</p>",
+                        "AcceptanceText": "Other Acceptance text",
+                        "ProvideInAPI": 1,
+                        "ProvideInRegistration": 1,
+                        "MarkAsRequired": 0,
+                        "Safename": "other_legal_title",
+                        "PublishDate": "2018-05-18 10:00:00",
+                        "RevisionsCount": 0
+                    }
+                ]
+            }
+
+
+
+# Get Legal [/api/legals/{legal_UUID}]
+## Get legal by ID [GET]
+DOES NOT REQUIRE AUTHENTICATION
+
++ Parameters
+    + legal_UUID: `6bf48365-13de-422b-8c32-346423a94466` (string)
+
++ Request
+     + Headers
+             Accept: application/vnd.studytracks.v1+json
+             Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + legal (object)
+            + UUID (string)
+            + Title (string)
+            + Content (string)
+            + AcceptanceText (string)
+            + ProvideInAPI (boolean)
+            + ProvideInRegistration (boolean)
+            + MarkAsRequired (boolean)
+            + Safename (string)
+            + PublishDate (string)
+            + RevisionsCount (number)
+            + Revisions (array)
+                + (object)
+                    + UUID (string)
+                    + Title (string)
+                    + Content (string)
+                    + AcceptanceText (string)
+                    + ProvideInAPI (boolean)
+                    + ProvideInRegistration (boolean)
+                    + MarkAsRequired (boolean)
+                    + Safename (string)
+                    + PublishDate (string)
+                
+
+    + Body
+
+            {
+                "legal": {
+                    "UUID": "6bf48365-13de-422b-8c32-346423a94466",
+                    "Title": "Legal Title",
+                    "Content": "<p>Legal content</p>",
+                    "AcceptanceText": "Acceptance text",
+                    "ProvideInAPI": 1,
+                    "ProvideInRegistration": 1,
+                    "MarkAsRequired": 1,
+                    "Safename": "legal_title",
+                    "PublishDate": "2018-05-17 10:00:00",
+                    "RevisionsCount": 0
+                    "Revisions": [
+                        {
+                            "UUID": "6bf48365-13de-422b-8c32-346423a94466",
+                            "Title": "Legal Title",
+                            "Content": "<p>Legal content</p>",
+                            "AcceptanceText": "Acceptance text",
+                            "ProvideInAPI": 1,
+                            "ProvideInRegistration": 1,
+                            "MarkAsRequired": 1,
+                            "Safename": "legal_title",
+                            "PublishDate": "2018-05-16 10:00:00"
+                        },
+                        {
+                            "UUID": "6bf48365-13de-422b-8c32-346423a94466",
+                            "Title": "Legal Title",
+                            "Content": "<p>Legal content</p>",
+                            "AcceptanceText": "Acceptance text",
+                            "ProvideInAPI": 1,
+                            "ProvideInRegistration": 1,
+                            "MarkAsRequired": 1,
+                            "Safename": "legal_title",
+                            "PublishDate": "2018-05-15 10:00:00"
+                        }
+                    ]
+                }
+            }
+
+
+# Group General
+
+# Leaderboard [/api/leaderboard]
+
+## Get the leaderboard [GET]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + ranking: 15 (number)
+        + top (array)
+            + (object)
+                + position: 1 (number) - ranked position (multiple users can have same number), can go 1, 2, 2, 4
+                + username: john (string)
+                + points: 45000 (number)
+                + me: 0 (number) - is this the active user
+
+# Information [/api/information]
+
+## Get Information [GET]
+Get information for display on; static pages, social links, user message and their french translation.
+
+
+DOES NOT REQUIRE AUTHENTICATION
+
+Pages:
+ - Studytracks Levels
+ - Studytracks Points
+ - About the Membership
+ - Data Policy
+ - Contact Us
+ - Terms & Conditions
+ - About StudyTracks
+
+ + Request
+
+     + Headers
+
+             Accept: application/vnd.studytracks.v1+json
+             Authorization: Bearer {access_token}
+
+ + Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + page (array)
+            + (object)
+                + name (string)
+                + safe_name (string)
+                + content (string)
+                + last_updated (number)
+        + social (object)
+            + facebook (string)
+            + twitter (string)
+            + youtube (string)
+        + variables (object)
+            + exam_country (array)
+                + (object)
+                    + name (string)
+                    + country_code (string)
+                    + flag (string)
+                    + exam_levels (array)
+                        + (object)
+                            + name (string)
+                            + lesson (number) - number of lessons in this level
+                            + quiz (number) - number of quizzes in this level
+            + ethnicity (array)
+                + (object)
+                    + key (number)
+                    + name (string)
+        + user_message (array)
+            + (object)
+                + id (string)
+                + exam_level_id (string)
+                + exam_level_name (string)
+                + name (string)
+                + lesson (number)
+                + quiz (number)
+                + message (string)
+                + message_subject_link (string)
+                + message_lesson_link (string)
+                + message_quiz_link (string)
+                + message_information_page (string)
+                + message_image (string)
+                + start_date (string)
+                + end_date (string)
+
+    + Body
+
+            {
+                "page": [
+                    {
+                        "lang": "en",
+                        "name": "Contact",
+                        "safe_name": "contact",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "fr",
+                        "name": "",
+                        "safe_name": "contact",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "en",
+                        "name": "About StudyTracks",
+                        "safe_name": "about",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "fr",
+                        "name": "",
+                        "safe_name": "about",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "en",
+                        "name": "Contact Us",
+                        "safe_name": "contact",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "fr",
+                        "name": "",
+                        "safe_name": "contact",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "en",
+                        "name": "Terms and Conditions",
+                        "safe_name": "terms",
+                        "content": "",
+                        "last_updated": 1480550400
+                    },
+                    {
+                        "lang": "fr",
+                        "name": "",
+                        "safe_name": "terms",
+                        "content": "",
+                        "last_updated": 1480550400
+                    }
+                ],
+                "social": {
+                    "facebook": "http://facebook.com",
+                    "twitter": "http://twitter.com",
+                    "youtube": "http://youtube.com",
+                }
+                "variables": {
+                    "exam_country": [
+                      {
+                        "name": "United Kingdom",
+                        "country_code": "EN",
+                        "flag": "http://studytracks.dev.flipsidegroup.com/assets/Uploads/_resampled/ScaleWidthWzUwMF0/UK.png"
+                        "exam_levels": [
+                          {
+                            "name": "GCSE",
+                            "lesson": 12,
+                            "quiz": 51
+                          },
+                          {
+                            "name": "SAT",
+                             "lesson": 12,
+                             "quiz": 51
+                          },
+                          {
+                            "name": "A2 LEVEL",
+                              "lesson": 12,
+                              "quiz": 51
+                          },
+                          {
+                            "name": "AS LEVEL",
+                              "lesson": 12,
+                              "quiz": 51
+                          }
+                        ]
+                      }
+                    ],
+                    "ethnicity": [
+                      {
+                        "key": 2,
+                        "name": "White - British"
+                      },
+                      {
+                        "key": 3,
+                        "name": "White - Irish"
+                      },
+                      {
+                        "key": 4,
+                        "name": "White - any other White background"
+                      },
+                      {
+                        "key": 5,
+                        "name": "Any other ethnic origin group"
+                      },
+                      {
+                        "key": 6,
+                        "name": "Chinese"
+                      },
+                      {
+                        "key": 7,
+                        "name": "Asian or Asian British - Indian"
+                      },
+                      {
+                        "key": 8,
+                        "name": "Asian or Asian British - Pakistani"
+                      },
+                      {
+                        "key": 9,
+                        "name": "Asian or Asian British - Bandladeshi"
+                      },
+                      {
+                        "key": 10,
+                        "name": "Asian or Asian British - any other Asian background"
+                      },
+                      {
+                        "key": 11,
+                        "name": "Black or Black British - Caribbean"
+                      },
+                      {
+                        "key": 12,
+                        "name": "Black or Black British - African"
+                      },
+                      {
+                        "key": 13,
+                        "name": "Black or Black British - any other Black background"
+                      },
+                      {
+                        "key": 14,
+                        "name": "Mixed - White and Black Caribbean"
+                      },
+                      {
+                        "key": 15,
+                        "name": "Mixed - White and Black African"
+                      },
+                      {
+                        "key": 16,
+                        "name": "Mixed - White and Asian"
+                      },
+                      {
+                        "key": 17,
+                        "name": "Mixed - Any other mixed background"
+                      }
+                    ],
+                    "user_message": [
+                      {
+                        "id": "d4f8abcc-b80a-4755-8407-d9d535cfb817",
+                        "exam_level_id": "307fb027-aa34-457a-84ab-737e0053a390",
+                        "exam_level_name": "UK GCSE / YR 9-11",
+                        "name": "GCSE UK: YR 9-11",
+                        "lesson": 193,
+                        "quiz": 133,
+                        "message": "This is a test message for GCSE: YR 9-11",
+                        "message_subject_link": null,
+                        "message_lesson_link": "c28b7247-17ff-45c2-b9d8-c3969fe29730",
+                        "message_quiz_link": null,
+                        "message_information_page": null,
+                        "message_image": "http://studytracks.dev.flipsidegroup.com/assets/Uploads/_resampled/ScaleWidthWzcyMF0/landscape3.jpg",
+                        "start_date": "01-03-2017",
+                        "end_date": "31-03-2017"
+                     },
+                     {
+                        "id": "af613b98-dcd3-4652-b9cd-d254192bd10b",
+                        "exam_level_id": "1d773994-e7cd-447a-ab54-9e3f4117b673",
+                        "exam_level_name": "US SAT/ACT",
+                        "name": "US SAT/ACT",
+                        "lesson": 373,
+                        "quiz": 146,
+                        "message": "This is a test message for US SAT/ACT.",
+                        "message_subject_link": "66cf7d9a-bec6-45f6-96c5-bb1911e853e4",
+                        "message_lesson_link": null,
+                        "message_quiz_link": null,
+                        "message_information_page": null,
+                        "message_image": "http://studytracks.dev.flipsidegroup.com/assets/users/ba08da0c-f405-47cb-b3fd-4686214887bf/image/_resampled/ScaleWidthWzcyMF0/1462376082496.jpg",
+                        "start_date": "01-03-2017",
+                        "end_date": "30-04-2017"
+                      },
+                    ]
+                  }
+            }
+
+
+# Points [/api/information/points]
+
+## Get Point levels and scoring [GET]
+
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/vnd.studytracks.v1+json
+            Authorization: Bearer {access_token}
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + points (array)
+            + (object)
+                + name (string)
+                + points (number)
+        + levels (array)
+            + (object)
+                + title (string)
+                + description (string)
+                + points (number)
+                + icon (string)
+
+    + Body
+
+            {
+                "points": [
+                   {
+                     "name": "Completed lesson",
+                     "points": 100
+                   },
+                   {
+                     "name": "Completed quiz",
+                     "points": 50
+                   },
+                   {
+                     "name": "Scoring between 80% and 99% on a quiz",
+                     "points": 100
+                   },
+                   {
+                     "name": "Perfect 100% on a quiz",
+                     "points": 500
+                   }
+                 ],
+                 "levels": [
+                   {
+                     "title": "General Admittance",
+                     "description": "Earn some points to improve your level",
+                     "points": 0,
+                     "icon": null
+                   },
+                   {
+                     "title": "Standing",
+                     "description": "Well now you might be able to see the stage...",
+                     "points": 2020,
+                     "icon": "http://example.com/images/image.png"
+                   }
+                 ]
+            }
