@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/src/boot.php';
+
+$doc = <<<DOC
+SilverStripe Cache Clear
+
+Usage:
+  cacheclear classes
+  cacheclear statics
+  cacheclear config
+  cacheclear templates
+  cacheclear all
+
+Options:
+  -h --help         Show this screen.
+DOC;
+
+$args = (new Docopt\Handler())->handle($doc);
+
+if ($args['classes']) {
+    Heyday\clear_class_manifest();
+    echo 'Done'.PHP_EOL;
+} elseif ($args['statics']) {
+    Heyday\clear_config_static_manifest();
+    echo 'Done'.PHP_EOL;
+} elseif ($args['config']) {
+    Heyday\clear_config_manifest();
+    echo 'Done'.PHP_EOL;
+} elseif ($args['templates']) {
+    Heyday\clear_templates();
+    echo 'Done'.PHP_EOL;
+} elseif ($args['all']) {
+    Heyday\clear_class_manifest();
+    Heyday\clear_config_static_manifest();
+    Heyday\clear_config_manifest();
+    Heyday\clear_templates();
+    Heyday\clear_class_manifest();
+    echo 'Done'.PHP_EOL;
+}

@@ -1,0 +1,19 @@
+{
+	"name": "heyday/silverstripe-cacheclear",
+	"description": "Fine grained and safe cache clearing",
+	"license": "MIT",
+	"type": "silverstripe-module",
+	"authors": [
+		{
+			"name": "Cam Spiers",
+			"email": "camspiers@gmail.com"
+		}
+	],
+	"require": {
+		"docopt/docopt": "0.6.0"
+	},
+	"autoload": {
+		"files": ["src/functions.php"]
+	},
+	"bin": ["cacheclear"]
+}
